@@ -9,6 +9,9 @@ class Customer {
         this.phoneNumber = phoneNumber
         this.email = email
     }
+    naming(){
+        return this.firstname + ' ' + this.lastname 
+    }
 }
 
 class Booking {
@@ -46,12 +49,12 @@ class Price {
 }
 
 const customers = [new Customer(1, 'Gabriele', 'Presicci', new Date('1993-04-10'), '5346564563', 'gab@email.com'),
-                    new Customer(2, 'Simone', 'Spadino', new Date('1994-06-13'), '34564563', 'sim@email.com')]
+new Customer(2, 'Simone', 'Spadino', new Date('1994-06-13'), '34564563', 'sim@email.com')]
 const prices = [new Price(1, new Date('2022-11-7'), new Date('2022-11-8'), 17.9),
-                new Price(2, new Date('2022-12-6'), new Date('2022-12-9'), 15.9),
-                new Price(3, new Date('2022-12-16'), new Date('2022-12-19'), 25)]
+new Price(2, new Date('2022-12-6'), new Date('2022-12-9'), 15.9),
+new Price(3, new Date('2022-12-16'), new Date('2022-12-19'), 25)]
 const courts = [new Court(1, 'One', 'Clay', 'Indoor', prices.filter((v, i) => i === 0)),
-                new Court(2, 'Two', 'Grass', 'Outdoor', prices.filter(v => v.id > 1))]
+new Court(2, 'Two', 'Grass', 'Outdoor', prices.filter(v => v.id > 1))]
 const bookings = []
 
 function listBookings(bookings = []) {
@@ -75,11 +78,23 @@ function listBookings(bookings = []) {
     return bookingsListHtml
 }
 
-function showNewBookingForm(){
+function showNewBookingForm() {
     document.querySelector('#new-booking').classList.add('visible')
     document.querySelector('#add-booking-button').classList.remove('visible')
+    buildCustomersList(customers)
 }
 
+function buildCustomersList(customers) {
+    let customersList = '<option value= "-1"> Non ci sono clienti </option>'
+    if (customers.length) {
+        customersList = ''
+        customers.forEach(customer => {
+            customersList += '<option "value="'+ customer.id +'">' + customer.naming() + '</option>'          
+
+        })
+    }
+    fillHtmlElem('#booking-costumers', customersList)
+}
 
 
 function fillHtmlElem(selector, content) {
@@ -90,7 +105,7 @@ window.addEventListener('DOMContentLoaded', function () {
     console.log(customers)
     console.log(prices)
     console.log(courts)
-    
+
     const content = listBookings(bookings)
     fillHtmlElem('#bookings-list', content)
 })

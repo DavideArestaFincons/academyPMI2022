@@ -74,15 +74,25 @@ function listBookings(bookings = []) {
     let bookingsListHtml = 'Nessuna prenotazione presente'
 
     if (bookings.length > 0) {
-        bookingsListHtml = '<ul>'
+        bookingsListHtml = '<ul class="list-unstyled">'
         bookings.forEach(booking => {
             bookingsListHtml += '<li>'
-            bookingsListHtml += 'Data: ' + booking.date + ' '
-            bookingsListHtml += 'Ora di inizio: ' + booking.from + ' '
-            bookingsListHtml += 'Ora di fine: ' + booking.to + ' '
+            bookingsListHtml += 'Data: <strong>' + booking.date.toLocaleDateString('it') + '</strong> '
+            bookingsListHtml += '</li>'
+            bookingsListHtml += '<li>'
+            bookingsListHtml += 'Ora di inizio: ' + booking.from.toLocaleDateString('it') + ' '
+            bookingsListHtml += '</li>'
+            bookingsListHtml += '<li>'
+            bookingsListHtml += 'Ora di fine: ' + booking.to.toLocaleDateString('it') + ' '
+            bookingsListHtml += '</li>'
+            bookingsListHtml += '<li>'
             bookingsListHtml += 'Prezzo: ' + booking.price + ' '
+            bookingsListHtml += '</li>'
+            bookingsListHtml += '<li>'
             bookingsListHtml += 'Numero giocatori: ' + booking.players + ' '
-            bookingsListHtml += 'Prenotato da : ' + booking.bookedBy + ' '
+            bookingsListHtml += '</li>'
+            bookingsListHtml += '<li>'
+            bookingsListHtml += 'Prenotato da : <strong>' + booking.bookedBy.naming() + '</strong> '
             bookingsListHtml += '</li>'
         })
         bookingsListHtml += '</ul>'
@@ -121,7 +131,7 @@ function addBooking(){
     const bookingPrice = prices.find(p => p.id == selectedEntities.price)
     const bookingCustomer = customers.find(c => c.id == selectedEntities.customer)
     const bookingCourt = courts.find(c => c.id == selectedEntities.court)
-    const booking = new Booking(bookings.length+1, Date.now(), bookingPrice.fromDate, bookingPrice.toDate, bookingPrice.value, 2, bookingCustomer, bookingCourt)
+    const booking = new Booking(bookings.length+1, new Date(), bookingPrice.fromDate, bookingPrice.toDate, bookingPrice.value, 2, bookingCustomer, bookingCourt)
 
     try {
         if (!getBookingByDatesAndCourt(booking)) {
@@ -138,9 +148,6 @@ function addBooking(){
         alert(error)
     }
 
-
-
-   
 }
 
 function buildEntityList(entityList, selector) {

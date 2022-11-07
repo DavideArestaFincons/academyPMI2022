@@ -15,7 +15,17 @@
     </div>
 
     <div class="buttons">
-        <button type="button">Add Booking</button>
+        <button type="button" id="add-booking-button" class="visible" onclick="showNewBookingForm()">Add Booking</button>
     </div>
+
+    <div id="new-booking">
+        <form>
+            <div class="form-input">
+                <label for="booking-date" >Data</label>
+                <input id="booking-date" type="date">
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>

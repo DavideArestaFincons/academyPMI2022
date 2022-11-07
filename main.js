@@ -75,6 +75,13 @@ function listBookings(bookings = []) {
     return bookingsListHtml
 }
 
+function showNewBookingForm(){
+    document.querySelector('#new-booking').classList.add('visible')
+    document.querySelector('#add-booking-button').classList.remove('visible')
+}
+
+
+
 function fillHtmlElem(selector, content) {
     document.querySelector(selector).innerHTML = content
 }

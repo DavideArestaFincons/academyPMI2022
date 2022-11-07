@@ -1,0 +1,15 @@
+#new-booking {
+    display: none;
+}
+
+#new-booking.visible{
+    display: block;
+}
+
+#add-booking-button.visible{
+    display: block;
+}
+
+#add-booking-button{
+    display: none;
+}

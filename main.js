@@ -21,7 +21,7 @@ class Booking {
         this.price = price
         this.players = players
         this.bookedBy = bookedBy
-        this.court
+        this.court = court
     }
 
 }

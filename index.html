@@ -22,7 +22,13 @@
         <form>
             <div class="form-input">
                 <label for="booking-costumers">lista clienti</label>
-                <select id="booking-costumers" name="booking-costumers">
+                <select id="booking-costumers" name="booking-costumers" onchange="selectCustomer(this)">
+
+                </select>
+            </div>
+            <div class="form-input" id="court-list">
+                <label for="booking-courts">lista campi</label>
+                <select id="booking-courts" name="booking-courts">
 
                 </select>
             </div>

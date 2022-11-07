@@ -13,3 +13,11 @@
 #add-booking-button{
     display: none;
 }
+
+#court-list {
+    display: none;
+}
+
+#court-list.visible {
+    display: block;
+}

@@ -81,19 +81,25 @@ function listBookings(bookings = []) {
 function showNewBookingForm() {
     document.querySelector('#new-booking').classList.add('visible')
     document.querySelector('#add-booking-button').classList.remove('visible')
-    buildCustomersList(customers)
+    buildEntityList(customers, '#booking-costumers')
 }
 
-function buildCustomersList(customers) {
-    let customersList = '<option value= "-1"> Non ci sono clienti </option>'
-    if (customers.length) {
-        customersList = ''
-        customers.forEach(customer => {
-            customersList += '<option "value="'+ customer.id +'">' + customer.naming() + '</option>'          
+function selectCustomer(context){
+    if(context.value != -1){
+        document.querySelector('#court-list').classList.add('visible')
+    }
+    
+}
+
+function buildEntityList(entityList, selector) {
+    let resultHtml = '<option value="-1"></option>'
+    if (entityList.length) {
+        entityList.forEach(entity => {
+            resultHtml += '<option "value="'+ entity.id +'">' + entity.naming() + '</option>'          
 
         })
     }
-    fillHtmlElem('#booking-costumers', customersList)
+    fillHtmlElem(selector, resultHtml)
 }
 
 

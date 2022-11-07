@@ -123,17 +123,24 @@ function addBooking(){
     const bookingCourt = courts.find(c => c.id == selectedEntities.court)
     const booking = new Booking(bookings.length+1, Date.now(), bookingPrice.fromDate, bookingPrice.toDate, bookingPrice.value, 2, bookingCustomer, bookingCourt)
 
-    if (window.confirm('Sei sicuro di confermare la prenotazione?')){
-        bookings.push(booking)
-        const refreshEvent = new Event('RefreshBookings')
-        dispatchEvent(refreshEvent)
-
-        selectedEntities = {
-            customer: null,
-            court: null,
-            price: null
+    try {
+        if (!getBookingByDatesAndCourt(booking)) {
+            if (window.confirm('Sei sicuro di confermare la prenotazione?')){
+                bookings.push(booking)
+                const refreshEvent = new Event('RefreshBookings')
+                dispatchEvent(refreshEvent)
+            }
+        } else {
+            throw new Error('Prenotazione con gli stessi parametri già esistente nel sistema')
         }
+    } catch (error) {
+        console.error('C\'è un grosso errore!!!!');
+        alert(error)
     }
+
+
+
+   
 }
 
 function buildEntityList(entityList, selector) {
@@ -150,6 +157,10 @@ function buildEntityList(entityList, selector) {
 
 function fillHtmlElem(selector, content) {
     document.querySelector(selector).innerHTML = content
+}
+
+function getBookingByDatesAndCourt(booking) {
+    return bookings.find(b => b.from === booking.from && b.to === booking.to && b.court.id === booking.court.id)
 }
 
 window.addEventListener('DOMContentLoaded', function () {

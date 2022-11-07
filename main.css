@@ -21,3 +21,19 @@
 #court-list.visible {
     display: block;
 }
+
+#price-list {
+    display: none;
+}
+
+#price-list.visible {
+    display: block;
+}
+
+#confirm-booking-button {
+    display: none;
+}
+
+#confirm-booking-button.visible {
+    display: block;
+}

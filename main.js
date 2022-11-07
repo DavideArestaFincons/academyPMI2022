@@ -1,4 +1,3 @@
-
 class Customer {
 
     constructor(id, firstname, lastname, birthDate, phoneNumber, email) {
@@ -37,6 +36,10 @@ class Court {
         this.type = type
         this.prices = prices
     }
+
+    naming(){
+        return this.name + ' (' + this.ground + ', ' + this.type + ')'
+    }
 }
 
 class Price {
@@ -45,6 +48,10 @@ class Price {
         this.fromDate = fromDate
         this.toDate = toDate
         this.value = value
+    }
+
+    naming(){
+        return this.value +'€, ' + this.fromDate.toLocaleDateString('it')  + ' -> ' + this.toDate.toLocaleDateString('it')
     }
 }
 
@@ -56,6 +63,12 @@ new Price(3, new Date('2022-12-16'), new Date('2022-12-19'), 25)]
 const courts = [new Court(1, 'One', 'Clay', 'Indoor', prices.filter((v, i) => i === 0)),
 new Court(2, 'Two', 'Grass', 'Outdoor', prices.filter(v => v.id > 1))]
 const bookings = []
+
+const selectedEntities = {
+    customer: null,
+    court: null,
+    price: null
+}
 
 function listBookings(bookings = []) {
     let bookingsListHtml = 'Nessuna prenotazione presente'
@@ -84,18 +97,50 @@ function showNewBookingForm() {
     buildEntityList(customers, '#booking-costumers')
 }
 
-function selectCustomer(context){
+function updateSelectedEntities(context, entityName){
+    selectedEntities[entityName] = context.value
+}
+
+function showNext(context, divSelector, selectSelector, entityList){
     if(context.value != -1){
-        document.querySelector('#court-list').classList.add('visible')
+        document.querySelector(divSelector).classList.add('visible')
+        buildEntityList(entityList, selectSelector)
     }
     
+}
+
+function showConfirmButton(){
+    document.querySelector('#confirm-booking-button').classList.add('visible')
+}
+
+function getPricesByCourt(){
+    return courts.find(c => c.id == selectedEntities.court).prices
+}
+
+function addBooking(){
+    const bookingPrice = prices.find(p => p.id == selectedEntities.price)
+    const bookingCustomer = customers.find(c => c.id == selectedEntities.customer)
+    const bookingCourt = courts.find(c => c.id == selectedEntities.court)
+    const booking = new Booking(bookings.length+1, Date.now(), bookingPrice.fromDate, bookingPrice.toDate, bookingPrice.value, 2, bookingCustomer, bookingCourt)
+
+    if (window.confirm('Sei sicuro di confermare la prenotazione?')){
+        bookings.push(booking)
+        const refreshEvent = new Event('RefreshBookings')
+        dispatchEvent(refreshEvent)
+
+        selectedEntities = {
+            customer: null,
+            court: null,
+            price: null
+        }
+    }
 }
 
 function buildEntityList(entityList, selector) {
     let resultHtml = '<option value="-1"></option>'
     if (entityList.length) {
         entityList.forEach(entity => {
-            resultHtml += '<option "value="'+ entity.id +'">' + entity.naming() + '</option>'          
+            resultHtml += '<option value="'+ entity.id +'">' + entity.naming() + '</option>'          
 
         })
     }
@@ -112,6 +157,11 @@ window.addEventListener('DOMContentLoaded', function () {
     console.log(prices)
     console.log(courts)
 
+    const content = listBookings(bookings)
+    fillHtmlElem('#bookings-list', content)
+})
+
+window.addEventListener('RefreshBookings', function() {
     const content = listBookings(bookings)
     fillHtmlElem('#bookings-list', content)
 })

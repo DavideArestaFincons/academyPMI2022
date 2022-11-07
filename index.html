@@ -14,25 +14,32 @@
         
     </div>
 
-    <div class="buttons">
-        <button type="button" id="add-booking-button" class="visible" onclick="showNewBookingForm()">Add Booking</button>
-    </div>
-
     <div id="new-booking">
         <form>
             <div class="form-input">
                 <label for="booking-costumers">lista clienti</label>
-                <select id="booking-costumers" name="booking-costumers" onchange="selectCustomer(this)">
+                <select id="booking-costumers" name="booking-costumers" onchange="updateSelectedEntities(this, 'customer'); showNext(this, '#court-list', '#booking-courts', courts)">
 
                 </select>
             </div>
             <div class="form-input" id="court-list">
                 <label for="booking-courts">lista campi</label>
-                <select id="booking-courts" name="booking-courts">
+                <select id="booking-courts" name="booking-courts" onchange="updateSelectedEntities(this, 'court'); showNext(this, '#price-list', '#booking-prices', getPricesByCourt())">
+
+                </select>
+            </div>
+            <div class="form-input" id="price-list">
+                <label for="booking-prices">lista prezzi</label>
+                <select id="booking-prices" name="booking-prices" onchange="updateSelectedEntities(this, 'price'); showConfirmButton()">
 
                 </select>
             </div>
         </form>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="add-booking-button" class="visible" onclick="showNewBookingForm()">Add Booking</button>
+        <button type="button" id="confirm-booking-button" onclick="addBooking()">Conferma Prenotazione</button>
     </div>
 
 </body>

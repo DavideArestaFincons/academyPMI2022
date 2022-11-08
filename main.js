@@ -60,6 +60,10 @@ function getEntitiesFromFile(url) {
     return fetch(url).then(r => r.json())
 }
 
+getEntitiesFromFile('./prices.json').then(pricesResponse => {
+    prices = pricesResponse.map(p => new Price(p.id, new Date(p.fromDate) , new Date(p.toDate) , p.value)) 
+})    
+
 function updateSelectedEntities(value, entityName) {
     selectedEntities[entityName] = value
 }
@@ -94,6 +98,8 @@ function showConfirmButton() {
 function getPricesByCourt() {
     return courts.find(c => c.id == selectedEntities.court).prices
 }
+
+
 
 function addBooking() {
     const bookingPrice = prices.find(p => p.id == selectedEntities.price)

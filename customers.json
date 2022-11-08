@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "firstname": "Gabriele",
+    "lastname": "Presicci",
+    "birthDate": "1993-04-10",
+    "phoneNumber": "5346564563",
+    "email": "gab@email.com"
+  },
+  {
+    "id": 2,
+    "firstname": "Simone",
+    "lastname": "Spadino",
+    "birthDate": "1994-06-13",
+    "phoneNumber": "34564563",
+    "email": "sim@email.com"
+  }
+]

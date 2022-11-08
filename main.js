@@ -1,13 +1,9 @@
 import { Customer, Price, Court, Booking } from './classes.js'
 
-const customers = [new Customer(1, 'Gabriele', 'Presicci', new Date('1993-04-10'), '5346564563', 'gab@email.com'),
-new Customer(2, 'Simone', 'Spadino', new Date('1994-06-13'), '34564563', 'sim@email.com')]
-const prices = [new Price(1, new Date('2022-11-7'), new Date('2022-11-8'), 17.9),
-new Price(2, new Date('2022-12-6'), new Date('2022-12-9'), 15.9),
-new Price(3, new Date('2022-12-16'), new Date('2022-12-19'), 25)]
-const courts = [new Court(1, 'One', 'Clay', 'Indoor', prices.filter((v, i) => i === 0)),
-new Court(2, 'Two', 'Grass', 'Outdoor', prices.filter(v => v.id > 1))]
-const bookings = []
+let customers = []
+let prices = []
+let courts = []
+let bookings = []
 
 
 
@@ -51,20 +47,41 @@ function showNewBookingForm() {
     document.querySelector('#customer-list').classList.add('visible')
     document.querySelector('#new-booking').classList.add('visible')
     document.querySelector('#add-booking-button').classList.remove('visible')
-    buildEntityList(customers, '#booking-costumers')
+    getEntitiesFromFile('./customers.json').then(customersResponse => {
+        customers = customersResponse.map(c => new Customer(c.id, c.firstname, c.lastname, c.birthDate, c.phoneNumber, c.email))
+        buildEntityList(customers, '#booking-costumers')
+    })
+   
 }
 
 
+
+function getEntitiesFromFile(url) {
+    return fetch(url).then(r => r.json())
+}
 
 function updateSelectedEntities(value, entityName) {
     selectedEntities[entityName] = value
 }
 
-function showNext(value, divSelector, selectSelector, entityList) {
+function showCourts(value, divSelector, selectSelector) {
     if (value != -1) {
         document.querySelector(divSelector).classList.add('visible')
-        buildEntityList(entityList, selectSelector)
+        getEntitiesFromFile('./courts.json').then(courtsResponse => {
+            courts = courtsResponse.map(c => new Court(c.id, c.name, c.ground, c.type, c.prices)) 
+            buildEntityList(courts, selectSelector)
+        })
     }
+
+}
+
+function showPrices(value, divSelector, selectSelector) {
+    if (value != -1) {
+        document.querySelector(divSelector).classList.add('visible')
+        console.log(courts)
+        buildEntityList(getPricesByCourt(), selectSelector)
+    }
+    
 
 }
 
@@ -151,13 +168,13 @@ window.addEventListener('RefreshBookings', () => {
 document.querySelector('#booking-costumers').addEventListener('change', (event) => {
     const selectedValue = event.target.value
     updateSelectedEntities(selectedValue, 'customer')
-    showNext(selectedValue, '#court-list', '#booking-courts', courts)
+    showCourts(selectedValue, '#court-list', '#booking-courts')
 })
 
 document.querySelector('#booking-courts').addEventListener('change', (event) => {
     const selectedValue = event.target.value
     updateSelectedEntities(selectedValue, 'court')
-    showNext(selectedValue, '#price-list', '#booking-prices', getPricesByCourt())
+    showPrices(selectedValue, '#price-list', '#booking-prices')
 })
 
 document.querySelector('#booking-prices').addEventListener('change', (event) => {

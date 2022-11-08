@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "one",
+    "ground": "Clay",
+    "type": "Indoor",
+    "prices": [
+      {
+        "id": 1,
+        "fromDate": "2022-11-7",
+        "toDate": "2022-11-8",
+        "value": 17.9
+      },
+      {
+        "id": 2,
+        "fromDate": "2022-12-6",
+        "toDate": "2022-12-9",
+        "value": 15.9
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "two",
+    "ground": "Grass",
+    "type": "Outdoor",
+    "prices": [
+      {
+        "id": 3,
+        "fromDate": "2022-12-16",
+        "toDate": "2022-12-19",
+        "value": 25
+      }
+    ]
+  }
+]

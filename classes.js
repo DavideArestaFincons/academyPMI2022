@@ -34,7 +34,7 @@ export class Court {
         this.name = name
         this.ground = ground
         this.type = type
-        this.prices = prices
+        this.prices = prices.map(p => new Price(p.id, p.fromDate, p.toDate, p.value))
     }
 
     naming() {

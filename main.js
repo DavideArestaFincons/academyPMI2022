@@ -1,4 +1,4 @@
-import {Customer, Price, Court, Booking} from './classes.js'
+import { Customer, Price, Court, Booking } from './classes.js'
 
 const customers = [new Customer(1, 'Gabriele', 'Presicci', new Date('1993-04-10'), '5346564563', 'gab@email.com'),
 new Customer(2, 'Simone', 'Spadino', new Date('1994-06-13'), '34564563', 'sim@email.com')]
@@ -55,12 +55,12 @@ function showNewBookingForm() {
 
 
 
-function updateSelectedEntities(context, entityName) {
-    selectedEntities[entityName] = context.value
+function updateSelectedEntities(value, entityName) {
+    selectedEntities[entityName] = value
 }
 
-function showNext(context, divSelector, selectSelector, entityList) {
-    if (context.value != -1) {
+function showNext(value, divSelector, selectSelector, entityList) {
+    if (value != -1) {
         document.querySelector(divSelector).classList.add('visible')
         buildEntityList(entityList, selectSelector)
     }
@@ -97,10 +97,6 @@ function addBooking() {
         console.error('C\'è un grosso errore!!!!');
         alert(error)
     }
-
-
-
-
 }
 
 function buildEntityList(entityList, selector) {
@@ -123,24 +119,35 @@ function getBookingByDatesAndCourt(booking) {
     return bookings.find(b => b.from === booking.from && b.to === booking.to && b.court.id === booking.court.id)
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-    console.log(customers)
-    console.log(prices)
-    console.log(courts)
-
+window.addEventListener('RefreshBookings', () => {
     const content = listBookings(bookings)
     fillHtmlElem('#bookings-list', content)
 })
 
-window.addEventListener('RefreshBookings', function () {
-    const content = listBookings(bookings)
-    fillHtmlElem('#bookings-list', content)
+document.querySelector('#booking-costumers').addEventListener('change', (event) => {
+    const selectedValue = event.target.value
+    updateSelectedEntities(selectedValue, 'customer')
+    showNext(selectedValue, '#court-list', '#booking-courts', courts)
 })
 
-window.courts = courts
-window.showNext = showNext
-window.updateSelectedEntities = updateSelectedEntities
-window.addBooking = addBooking
-window.getPricesByCourt = getPricesByCourt
-window.showConfirmButton = showConfirmButton
-window.showNewBookingForm = showNewBookingForm
+document.querySelector('#booking-courts').addEventListener('change', (event) => {
+    const selectedValue = event.target.value
+    updateSelectedEntities(selectedValue, 'court')
+    showNext(selectedValue, '#price-list', '#booking-prices', getPricesByCourt())
+})
+
+document.querySelector('#booking-prices').addEventListener('change', (event) => {
+    updateSelectedEntities(event.target.value, 'price')
+    showConfirmButton()
+})
+
+document.querySelector('#add-booking-button').addEventListener('click', () => showNewBookingForm())
+
+document.querySelector('#confirm-booking-button').addEventListener('click', () => addBooking())
+
+
+console.log(customers)
+console.log(prices)
+console.log(courts)
+const content = listBookings(bookings)
+fillHtmlElem('#bookings-list', content)

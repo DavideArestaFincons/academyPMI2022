@@ -19,7 +19,6 @@
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
         crossorigin="anonymous"></script>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    
     <script type="module" src='classes.js'></script>
     <script type="module" src='main.js'></script>
 </head>
@@ -35,32 +34,26 @@
             <form >
                 <div class="form-group">
                     <label for="booking-costumers">Cliente</label>
-                    <select class="form-control" id="booking-costumers" name="booking-costumers"
-                        onchange="updateSelectedEntities(this, 'customer'); showNext(this, '#court-list', '#booking-courts', courts)">
-
+                    <select class="form-control" id="booking-costumers" name="booking-costumers">
                     </select>
                 </div>
                 <div class="form-group" id="court-list">
                     <label for="booking-courts">Campo</label>
-                    <select class="form-control" id="booking-courts" name="booking-courts"
-                        onchange="updateSelectedEntities(this, 'court'); showNext(this, '#price-list', '#booking-prices', getPricesByCourt())">
-
+                    <select class="form-control" id="booking-courts" name="booking-courts">
                     </select>
                 </div>
                 <div class="form-group" id="price-list">
                     <label for="booking-prices">Prezzo</label>
-                    <select class="form-control" id="booking-prices" name="booking-prices"
-                        onchange="updateSelectedEntities(this, 'price'); showConfirmButton()">
-
+                    <select class="form-control" id="booking-prices" name="booking-prices">
                     </select>
                 </div>
             </form>
         </div>
 
         <div class="buttons">
-            <button class="btn btn-primary visible" type="button" id="add-booking-button" onclick="showNewBookingForm()">Add
+            <button class="btn btn-primary visible" type="button" id="add-booking-button">Add
                 Booking</button>
-            <button class="btn btn-default" type="button" id="confirm-booking-button" onclick="addBooking()">Conferma Prenotazione</button>
+            <button class="btn btn-default" type="button" id="confirm-booking-button">Conferma Prenotazione</button>
         </div>
 
     </div>

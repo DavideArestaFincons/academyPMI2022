@@ -6,6 +6,14 @@
     display: block;
 }
 
+#customer-list {
+    display: none;
+}
+
+#customer-list.visible{
+    display: block;
+}
+
 #add-booking-button.visible{
     display: block;
 }

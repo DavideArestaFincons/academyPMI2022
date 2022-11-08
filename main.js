@@ -48,6 +48,7 @@ function listBookings(bookings = []) {
 }
 
 function showNewBookingForm() {
+    document.querySelector('#customer-list').classList.add('visible')
     document.querySelector('#new-booking').classList.add('visible')
     document.querySelector('#add-booking-button').classList.remove('visible')
     buildEntityList(customers, '#booking-costumers')
@@ -86,12 +87,19 @@ function addBooking() {
     try {
         if (!getBookingByDatesAndCourt(booking)) {
             if (window.confirm('Sei sicuro di confermare la prenotazione?')) {
-                bookings.push(booking)
                 document.querySelector('.overlay').style.display='block'
+
+                clearInterval(timerInterval)
                 setTimeout(() => {
-                    refreshBookingsEventDispatch()
-                    document.querySelector('.overlay').style.display='none'
-                }, 3000)
+                    clearStatus()
+                    bookings.push(booking)
+
+                    setTimeout(() => {
+                        refreshBookingsEventDispatch()
+                        document.querySelector('.overlay').style.display='none'
+                        timerInterval = setInterval(refreshBookingsEventDispatch, 5000)
+                    }, 2000)
+                }, 1000)
                 
             }
         } else {
@@ -106,6 +114,13 @@ function addBooking() {
 function refreshBookingsEventDispatch() {
     const refreshEvent = new Event('RefreshBookings')
     dispatchEvent(refreshEvent)
+}
+
+function clearStatus() {
+    selectedEntities.customer = null
+    selectedEntities.court = null
+    selectedEntities.price = null
+    document.querySelectorAll('#court-list,#price-list,#customer-list,#confirm-booking-button,#add-booking-button').forEach(elem => elem.classList.toggle('visible'))
 }
 
 function buildEntityList(entityList, selector) {
@@ -160,4 +175,4 @@ console.log(prices)
 console.log(courts)
 const content = listBookings(bookings)
 fillHtmlElem('#bookings-list', content)
-setInterval(refreshBookingsEventDispatch, 5000)
+let timerInterval = setInterval(refreshBookingsEventDispatch, 5000)

@@ -87,8 +87,13 @@ function addBooking() {
         if (!getBookingByDatesAndCourt(booking)) {
             if (window.confirm('Sei sicuro di confermare la prenotazione?')) {
                 bookings.push(booking)
-                const refreshEvent = new Event('RefreshBookings')
-                dispatchEvent(refreshEvent)
+                document.querySelector('.overlay').style.display='block'
+                setTimeout(() => {
+                    const refreshEvent = new Event('RefreshBookings')
+                    dispatchEvent(refreshEvent)
+                    document.querySelector('.overlay').style.display='none'
+                }, 3000)
+                
             }
         } else {
             throw new Error('Prenotazione con gli stessi parametri già esistente nel sistema')

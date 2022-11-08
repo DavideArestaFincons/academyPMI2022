@@ -89,8 +89,7 @@ function addBooking() {
                 bookings.push(booking)
                 document.querySelector('.overlay').style.display='block'
                 setTimeout(() => {
-                    const refreshEvent = new Event('RefreshBookings')
-                    dispatchEvent(refreshEvent)
+                    refreshBookingsEventDispatch()
                     document.querySelector('.overlay').style.display='none'
                 }, 3000)
                 
@@ -102,6 +101,11 @@ function addBooking() {
         console.error('C\'è un grosso errore!!!!');
         alert(error)
     }
+}
+
+function refreshBookingsEventDispatch() {
+    const refreshEvent = new Event('RefreshBookings')
+    dispatchEvent(refreshEvent)
 }
 
 function buildEntityList(entityList, selector) {
@@ -156,3 +160,4 @@ console.log(prices)
 console.log(courts)
 const content = listBookings(bookings)
 fillHtmlElem('#bookings-list', content)
+setInterval(refreshBookingsEventDispatch, 5000)

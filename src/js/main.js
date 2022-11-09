@@ -4,10 +4,11 @@ let customers = [];
 let prices = (await getEntitiesFromFile('./prices.json')).map(p => new Price(p.id, new Date(p.fromDate), new Date(p.toDate), p.value));
 let courts = [];
 let bookings = [];
-const selectedEntities = {
+export const selectedEntities = {
     customer: null,
     court: null,
-    price: null
+    price: null,
+    booking: null
 };
 export const state = {
     customers,

@@ -12,16 +12,19 @@ export class Customer {
     }
 }
 export class Booking {
-    constructor(id, date, from, to, price, players, bookedBy, court) {
+    constructor(id, date, price, players, bookedBy, court) {
         this.id = id;
         this.date = date;
-        this.from = from;
-        this.to = to;
         this.price = price;
         this.players = players;
         this.bookedBy = bookedBy;
         this.court = court;
         this.paidOn = null;
+    }
+    update(price, bookedBy, court) {
+        this.price = price;
+        this.bookedBy = bookedBy;
+        this.court = court;
     }
 }
 export class Court {
@@ -50,6 +53,9 @@ export class Price {
             this.fromDate.toLocaleDateString("it") +
             " -> " +
             this.toDate.toLocaleDateString("it"));
+    }
+    formattedValue() {
+        return this.value + " €";
     }
 }
 //# sourceMappingURL=classes.js.map

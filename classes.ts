@@ -17,13 +17,18 @@ export class Booking {
   constructor(
     public id: number,
     public date: Date,
-    public from: Date,
-    public to: Date,
-    public price: number,
+    public price: Price,
     public players: number,
     public bookedBy: Customer,
     public court: Court
   ) {}
+  update(price: Price,
+    bookedBy: Customer,
+    court: Court) {
+      this.price = price
+      this.bookedBy = bookedBy
+      this.court = court
+    }
 }
 
 export class Court {
@@ -60,5 +65,9 @@ export class Price {
       " -> " +
       this.toDate.toLocaleDateString("it")
     );
+  }
+
+  formattedValue() {
+    return this.value + " €";
   }
 }

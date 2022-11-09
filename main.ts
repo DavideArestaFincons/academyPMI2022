@@ -6,10 +6,11 @@ let prices = (await getEntitiesFromFile<Price[]>('./prices.json')).map(p => new 
 let courts = []
 let bookings = []
 
-const selectedEntities = {
+export const selectedEntities = {
     customer: null,
     court: null,
-    price: null
+    price: null,
+    booking: null
 }
 
 export const state = {

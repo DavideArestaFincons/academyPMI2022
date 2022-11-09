@@ -33,6 +33,11 @@ export function listBookings(bookings = []) {
     }
     return bookingsListHtml;
 }
+export function deleteBooking(bookingId) {
+    const bookingIndex = state.bookings.findIndex((booking) => booking.id === bookingId);
+    state.bookings.splice(bookingIndex, 1);
+    refreshBookingsEventDispatch();
+}
 export function editExistingBookingForm(bookingId) {
     const booking = state.bookings.find((booking) => booking.id === bookingId);
     updateSelectedEntities(booking.bookedBy.id.toString(), 'customer');
@@ -61,6 +66,8 @@ export async function getEntitiesFromFile(url) {
 }
 export function updateSelectedEntities(value, entityName) {
     state.selectedEntities[entityName] = value;
+}
+export function deleteSelectedEntities(value, entityName) {
 }
 export async function showCourts(value, divSelector, selectSelector) {
     if (value != '-1') {

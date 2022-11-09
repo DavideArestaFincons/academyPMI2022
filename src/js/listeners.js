@@ -1,9 +1,11 @@
-import { listBookings, addBooking, fillHtmlElem, showConfirmButton, showCourts, showNewBookingForm, showPrices, updateSelectedEntities, editExistingBookingForm } from './functions.js';
+import { listBookings, addBooking, fillHtmlElem, showConfirmButton, showCourts, showNewBookingForm, showPrices, updateSelectedEntities, editExistingBookingForm, deleteBooking } from './functions.js';
 import { state } from './main.js';
 window.addEventListener('RefreshBookings', () => {
     const content = listBookings(state.bookings);
     fillHtmlElem('#bookings-list', content);
     addEditListener();
+    addDeleteListener();
+    fillHtmlElem('#total-money-gained>h4>strong', String(state.bookings.map((b) => b.price.value).reduce((p, c) => p + c)) + '€');
 });
 document.querySelector('#booking-costumers').addEventListener('change', (event) => {
     const selectedValue = event.target.value;
@@ -26,6 +28,14 @@ function addEditListener() {
         booking.removeEventListener('click', () => { });
         booking.addEventListener('click', (event) => {
             editExistingBookingForm(Number.parseInt(event.target.dataset['bookingId']));
+        });
+    });
+}
+function addDeleteListener() {
+    document.querySelectorAll('.delete-booking').forEach(booking => {
+        booking.removeEventListener('click', () => { });
+        booking.addEventListener('click', (event) => {
+            deleteBooking(Number.parseInt(event.target.dataset['bookingId']));
         });
     });
 }

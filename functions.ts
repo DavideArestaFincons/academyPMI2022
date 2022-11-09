@@ -37,6 +37,12 @@ export function listBookings(bookings: Booking[] = []): string {
     return bookingsListHtml
 }
 
+export function deleteBooking(bookingId: number){
+  const bookingIndex: number = state.bookings.findIndex((booking: Booking) => booking.id === bookingId)
+  state.bookings.splice(bookingIndex, 1)
+  refreshBookingsEventDispatch()
+}
+
 export function editExistingBookingForm(bookingId: number) {
     const booking: Booking = state.bookings.find((booking: Booking) => booking.id === bookingId)
 
@@ -74,6 +80,10 @@ export async function getEntitiesFromFile<T>(url: string): Promise<T> {
 
 export function updateSelectedEntities(value: string | number, entityName: string) {
     state.selectedEntities[entityName] = value
+}
+
+export function deleteSelectedEntities(value: string | number, entityName: string){
+  
 }
 
 export async function showCourts(value: string, divSelector: string, selectSelector: string) {

@@ -7,7 +7,11 @@ window.addEventListener('RefreshBookings', () => {
   fillHtmlElem('#bookings-list', content)
   addEditListener()
   addDeleteListener()
-  fillHtmlElem('#total-money-gained>h4>strong', String(state.bookings.map((b : Booking) => b.price.value).reduce((p: number, c: number) => p+c))+'€')
+  let gain = '0€';
+  if (state.bookings.length > 0) {
+    gain = String(state.bookings.map((b : Booking) => b.price.value).reduce((p: number, c: number) => p+c))+'€'
+  }
+  fillHtmlElem('#total-money-gained>h4>strong', gain)
 })
 
 document.querySelector('#booking-costumers').addEventListener('change', (event: Event) => {

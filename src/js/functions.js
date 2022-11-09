@@ -4,28 +4,38 @@ let timerInterval = setInterval(refreshBookingsEventDispatch, 5000);
 export function listBookings(bookings = []) {
     let bookingsListHtml = 'Nessuna prenotazione presente';
     if (bookings.length > 0) {
-        bookingsListHtml = '<ul class="list-unstyled">';
+        bookingsListHtml = '';
         bookings.forEach(booking => {
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Data: <strong>' + booking.date.toLocaleDateString('it') + '</strong> ';
-            bookingsListHtml += '</li>';
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Ora di inizio: ' + booking.from.toLocaleDateString('it') + ' ';
-            bookingsListHtml += '</li>';
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Ora di fine: ' + booking.to.toLocaleDateString('it') + ' ';
-            bookingsListHtml += '</li>';
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Prezzo: ' + booking.price + ' ';
-            bookingsListHtml += '</li>';
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Numero giocatori: ' + booking.players + ' ';
-            bookingsListHtml += '</li>';
-            bookingsListHtml += '<li>';
-            bookingsListHtml += 'Prenotato da : <strong>' + booking.bookedBy.naming() + '</strong> ';
-            bookingsListHtml += '</li>';
+            bookingsListHtml += `<div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${booking.bookedBy.naming()}</h5>
+                    <p class="card-text">
+                        <ul class="list-unstyled">
+                            <li>
+                            Data: <strong> ${booking.date.toLocaleDateString('it')} </strong> 
+                            </li>
+                            <li>
+                            Ora di inizio:  ${booking.from.toLocaleDateString('it')} 
+                            </li>
+                            <li>
+                            Ora di fine:  ${booking.to.toLocaleDateString('it')}  
+                            </li>
+                            <li>
+                            Prezzo:  ${booking.price}
+                            </li>
+                            <li>
+                            Numero giocatori:  ${booking.players}
+                            </li>
+                            <li>
+                            Prenotato da : <strong> ${booking.bookedBy.naming()} </strong> 
+                            </li>
+                        </ul>
+                    </p>
+                    <a href="javascript:;" class="btn btn-warning">Modifica</a>
+                    <a href="javascript:;" class="btn btn-danger">Elimina</a>
+                </div>
+            </div>`;
         });
-        bookingsListHtml += '</ul>';
     }
     return bookingsListHtml;
 }
